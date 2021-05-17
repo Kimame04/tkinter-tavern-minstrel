@@ -1,3 +1,4 @@
+import shutil
 import tkinter as tk
 from tkinter import *
 import simpleaudio as sa
@@ -17,20 +18,20 @@ class Application(tk.Frame):
         self.lbl = tk.Label(self,text = 'Convert YT videos to mp3 here.')
         self.lbl.grid(row=1,column=0,padx=10,pady=5,sticky=W)
 
-        self.field = tk.Text(self,width=30,height=1)
+        self.field = tk.Text(self,width=30,height=1,background='#d3d3d3')
         self.field.grid(row=2, column=0, padx=10,sticky=W)
 
         self.upload = tk.Button(self, text='To mp3', width=10, command=self.convert)
-        self.upload.grid(row=3, column=0, padx=10,sticky=W)
+        self.upload.grid(row=3, column=0, padx=10,pady=5,sticky=W)
 
         self.refresh = tk.Button(self, text='Refresh', width=10, command=self.checkFiles)
-        self.refresh.grid(row=3, column=0, padx=10, sticky=E)
+        self.refresh.grid(row=3, column=0, padx=10,pady=5)
 
         self.lbl1 = tk.Label(self, text='All audio files in the working directory will appear here.')
         self.lbl1.grid(row=4, column=0, padx=10,pady=5,sticky=W)
 
         self.list = tk.Listbox(self)
-        self.list.bind('<<ListboxSelect>>',self.play)
+        self.list.bind('<Double-Button-1>',self.play)
         self.list.grid(row=5,column=0,padx=10,pady=5,sticky=W)
         self.checkFiles()
 
@@ -57,6 +58,8 @@ class Application(tk.Frame):
         self.list.delete(0,END)
         for item in files:
             self.list.insert(END, item)
+        if os.path.isdir('pytube/'):
+            shutil.rmtree('pytube/')
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 from pytube import YouTube
 from moviepy.editor import *
 import time
-
+import os
 
 def convertYtVid(string):
     yt = YouTube(string)
@@ -11,4 +11,4 @@ def convertYtVid(string):
         file_extension = "mp4"
     ).first().download(output_path = "pytube/",filename = name)
     video = VideoFileClip(os.path.join("pytube/", name + ".mp4"))
-    video.audio.write_audiofile(os.path.join("audio/", name + ".mp3"))
+    video.audio.write_audiofile(os.path.join("audio/", name + ".wav"))
